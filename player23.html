@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Random Position Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .player-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .player {
+            margin: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 5px #ccc;
+            border-radius: 15%;
+            background-color: #f5f5f5;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .player:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 10px #ccc;
+        }
+
+        .player img {
+            float: center;
+            width: 100px;
+            height: 100px;
+            object-fit: fill;
+            box-shadow: 2px 2px 5px #ccc;
+            border-radius: 25%;
+            background-color: #f5f5f5;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .player img:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 10px #ccc;
+        }
+
+        .result-card {
+            width: 105px;
+            height: 180px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 2px 2px 5px #ccc;
+            border-radius: 10px;
+            background-color: #f5f5f5;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .result-card:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 10px #ccc;
+        }
+
+        .result-card img {
+            float: left;
+            width: 90px;
+            height: 80px;
+            object-fit: fill;
+			border-radius: 10px; 
+			/* Adjust the border-radius to your liking */
+        }
+
+        .result-card.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .result-card-content {
+            padding: 5px;
+        }
+
+        .result-card-position {
+            font-weight: bold;
+            margin-top: 10px;
+            /* Add margin to position */
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .result-card-container {
+            flex: 0 0 calc(20% - 20px);
+        }
+
+        #result-list {
+            margin-top: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #print-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .slow-motion-card-view {
+            animation: slow-motion 5s linear;
+        }
+
+        @keyframes slow-motion {
+            0% {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Add a rule to limit image size */
+        .player img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+		  .container.hide-for-print {
+        display: none;
+    }
+	
+	#generate-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        #generate-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+		.button{
+  background-color: #343A40;
+  border-radius: 16px;  
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 20px; 
+}
+.button:hover{
+   background-image: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
+   animation:slide 3s linear infinite;/*slide is the name of animation*/
+  /*3s is the time taken to make one osciallation of the animation*/
+  /*linear pattern and will happen infinite times*/
+}
+@keyframes slide { 
+  to {
+    background-position:20vw;
+  }
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="color: #4CAF50; font-size: 40px; text-shadow: 2px 2px #FF0000;">Random Position Generator</h1>
+       <div class="player-list">
+            <!-- Add player names and images here -->
+            <div class="player">
+                <img src="mr_sadat.jpg" alt="Mr Sadat">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Sadat</p>
+            </div>
+            <div class="player">
+                <img src="mr_sadiqur.jpg" alt="Mr Sadiqur">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Sadiqur</p>
+            </div>
+            <div class="player">
+                <img src="mr_sharif.jpg" alt="Mr Sharif">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Sharif</p>
+            </div>
+            <div class="player">
+                <img src="mr_mahbub.jpg" alt="Mr Mahbub">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Mahbub</p>
+            </div>
+            <div class="player">
+                <img src="mr_mojahid.jpg" alt="Mr Mojahid">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Mojahid</p>
+            </div>
+			<div class="player">
+                <img src="mr_tarunya.jpg" alt="Mr Tarunya">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Tarunya</p>
+            </div>
+            <div class="player">
+                <img src="mr_mezba.jpg" alt="Mr Mezba">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Mezba</p>
+            </div>
+            <div class="player">
+                <img src="mr_iftekhar.jpg" alt="Mr Iftekhar">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Iftekhar</p>
+            </div>
+            <div class="player">
+                <img src="mr_bappy.jpg" alt="Mr Bappy">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Bappy</p>
+            </div>
+            <div class="player">
+                <img src="mr_alif.jpg" alt="Mr Alif">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Alif</p>
+            </div>
+			 <div class="player">
+                <img src="mr_noman.jpg" alt="Mr Noman">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Noman</p>
+            </div>
+			<div class="player">
+                <img src="mr_tuhin.jpg" alt="Mr Tuhin">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Tuhin</p>
+            </div>
+            <div class="player">
+                <img src="mr_shahed.jpg" alt="Mr Shahed">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Shahed</p>
+            </div>
+            <div class="player">
+                <img src="mr_shohidul.jpg" alt="Mr Shohidul">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Shohidul</p>
+            </div>
+            <div class="player">
+                <img src="mr_riday.jpg" alt="Mr Riday">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Riday</p>
+            </div>
+            <div class="player">
+                <img src="mr_tanzamul.jpg" alt="Mr Tanzamul">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Tanzamul</p>
+            </div>
+			<div class="player">
+                <img src="mr_shawon.jpg" alt="Mr Shawon">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Shawon</p>
+            </div>
+			<div class="player">
+                <img src="mr_tamim.jpg" alt="Mr Tamim">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Tamim</p>
+            </div>
+			<!--<div class="player">
+                <img src="mr_saddam.jpg" alt="Mr Saddam">
+                <p><input type="checkbox" class="player-checkbox" checked>Mr Saddam</p>
+            </div>-->
+        </div>
+
+        <button id="generate-btn">Generate Random Position</button>
+
+        <div id="result-list">
+          
+            <div id="result-cards" class="slow-motion-card-view">
+                <!-- Random positions and player info will be added here -->
+            </div>
+        </div>
+
+        <div class="wrap">
+			<button class="button" onclick="printList()">Print</button>
+		</div>
+    </div>
+
+    <table id="result-table">
+        <caption
+            style="color: #4CAF50; font-size: 40px; text-shadow: 2px 2px #FF0000;">Generated Players List</caption>
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="result-body">
+            <!-- Separate section list will be generated here -->
+        </tbody>
+    </table>
+
+    <script>
+        // Function to generate random positions with a cooler flip animation
+        document.getElementById("generate-btn").addEventListener("click", function () {
+            const checkboxes = document.querySelectorAll(".player-checkbox:checked");
+            const selectedPlayers = Array.from(checkboxes).map(checkbox => {
+                const playerName = checkbox.parentNode.textContent.trim();
+                return {
+                    name: playerName,
+                };
+            });
+
+            // Shuffle selectedPlayers array to randomize positions
+            for (let i = selectedPlayers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [selectedPlayers[i], selectedPlayers[j]] = [selectedPlayers[j], selectedPlayers[i]];
+            }
+
+            const resultCards = document.getElementById("result-cards");
+            resultCards.innerHTML = "";
+
+            // Add a delay before displaying each card with flip animation
+            const delay = 3000; // 1 second
+            const row = document.createElement("div");
+            row.classList.add("row");
+            resultCards.appendChild(row);
+
+            const positions = [];
+
+            selectedPlayers.forEach((player, index) => {
+                setTimeout(() => {
+                    const cardContainer = document.createElement("div");
+                    cardContainer.classList.add("result-card-container");
+
+                    const card = document.createElement("div");
+                    card.classList.add("result-card");
+                    card.classList.add("result-card-flip");
+                    card.innerHTML = `
+                        <img src="${player.name.toLowerCase().replace(/\s/g, '_')}.jpg" alt="${player.name}">
+                        <div class="result-card-content">
+                            <p>${player.name}</p>
+                            <p class="result-card-position">Position ${index + 1}</p>
+                        `;
+                    cardContainer.appendChild(card);
+                    row.appendChild(cardContainer);
+
+                    // Adding the 'show' class to trigger the transition
+                    card.classList.add("show");
+
+                    positions.push(index + 1);
+
+                    if (index === selectedPlayers.length - 1) {
+                        resultCards.classList.add("slow-motion-card-view");
+
+                        // Generate a separate section list based on the random positions
+                        generateList(positions, selectedPlayers);
+                    }
+                }, index * delay);
+            });
+        });
+
+        function generateList(positions, selectedPlayers) {
+            const resultBody = document.getElementById("result-body");
+            resultBody.innerHTML = "";
+
+            // Create an array with player indexes sorted by position
+            const playerIndexes = positions.map((position, index) => ({ position, index }));
+
+            // Sort the playerIndexes array based on position in ascending order
+            playerIndexes.sort((a, b) => a.position - b.position);
+
+            playerIndexes.forEach(({ position, index }) => {
+                const player = selectedPlayers[index];
+                const row = document.createElement("tr");
+                const positionCell = document.createElement("td");
+                positionCell.textContent = position;
+                const nameCell = document.createElement("td");
+                nameCell.textContent = player.name;
+                const scoreCell = document.createElement("td");
+                scoreCell.innerHTML = "<input type='text' class='score-input' />";
+                row.appendChild(positionCell);
+                row.appendChild(nameCell);
+                row.appendChild(scoreCell);
+                resultBody.appendChild(row);
+            });
+        }
+
+        // Function to print the result list
+        function printList() {
+            // Hide elements not to be printed
+            document.getElementById("result-list").style.display = "none";
+            document.getElementById("generate-btn").style.display = "none";
+			 const container = document.querySelector(".container");
+			container.classList.toggle("hide-for-print");
+
+            // Print the table content
+            window.print();
+
+            // Restore hidden elements
+            document.getElementById("result-list").style.display = "block";
+            document.getElementById("generate-btn").style.display = "block";
+			
+        }
+    </script>
+</body>
+
+</html>
